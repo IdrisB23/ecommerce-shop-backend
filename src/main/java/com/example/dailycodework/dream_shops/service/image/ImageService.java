@@ -62,7 +62,9 @@ public class ImageService implements IImageService {
     @Override
     public void deleteImageById(Long id) {
         imageRepository.findById(id).ifPresentOrElse(
-                imageRepository::save, () -> new ResourceNotFoundException("Image with id " + id + " not found")
+                imageRepository::save, () -> {
+                    throw new ResourceNotFoundException("Image with id " + id + " not found");
+                }
         );
     }
 
