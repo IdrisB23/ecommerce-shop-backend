@@ -17,14 +17,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService implements IProductService {
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+
     @Override
     public Product addProduct(AddProductRequest request) {
         // check if the category is found in the database
         // if yes, set it as the new product category
-
         // if not, save it as a new category
         // set it as the new product category
-        return null;
+        Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
+                .orElseGet(()->{
+                    Category newCategory = new Category(request.getCategory().getName(), request.getCategory().getDescription());
+                    categoryRepository.save(newCategory);
+                    return newCategory;
+                });
+        Product newProduct = createProduct(request, category);
+        productRepository.save(newProduct);
+        return newProduct;
     }
 
     private Product createProduct(AddProductRequest request, Category category) {
@@ -60,7 +69,14 @@ public class ProductService implements IProductService {
     }
 
     private Product updateExistingProduct(Product existingProduct, UpdateProductRequest request) {
-        return null;
+        existingProduct.setName(request.getName());
+        existingProduct.setBrand(request.getBrand());
+        existingProduct.setDescription(request.getDescription());
+        existingProduct.setInventory(request.getInventory());
+        existingProduct.setPrice(request.getPrice());
+        Category category = categoryRepository.findByName(request.getCategory().getName());
+        existingProduct.setCategory(category);
+        return existingProduct;
     }
 
     @Override
