@@ -39,7 +39,7 @@ public class ImageService implements IImageService {
                 image.setFileType(file.getContentType());
                 image.setImage(new SerialBlob(file.getBytes()));
                 image.setProduct(product);
-                String buildDownloadUrl = "/api/v1/images/image/download/";
+                String buildDownloadUrl = "${api.prefix}/images/image/download/";
                 image.setDownloadUrl(buildDownloadUrl + image.getId());
                 Image savedImage = imageRepository.save(image);
                 // use the saved image id (WHY duplicate?)
