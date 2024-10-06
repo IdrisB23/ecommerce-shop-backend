@@ -15,19 +15,19 @@ import java.util.List;
 public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
     private String description;
+    private String name;
 
     @JsonIgnore // to prevent endless nesting depth when retrieving products (cyclic relationship Product<->Category)
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 
+    public Category(String name) {
+        this.name = name;
+    }
+
     public Category(String name, String description) {
         this.name = name;
         this.description = description;
-    }
-
-    public Category(String name) {
-        this.name = name;
     }
 }
