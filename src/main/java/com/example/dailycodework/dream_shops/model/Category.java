@@ -1,5 +1,6 @@
 package com.example.dailycodework.dream_shops.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,11 +18,16 @@ public class Category {
     private String name;
     private String description;
 
+    @JsonIgnore // to prevent endless nesting depth when retrieving products (cyclic relationship Product<->Category)
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 
     public Category(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public Category(String name) {
+        this.name = name;
     }
 }
