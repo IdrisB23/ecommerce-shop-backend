@@ -1,5 +1,7 @@
 package com.example.dailycodework.dream_shops.service.image;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.example.dailycodework.dream_shops.dto.ImageDto;
 import com.example.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.example.dailycodework.dream_shops.model.Image;
@@ -22,6 +24,9 @@ public class ImageService implements IImageService {
     private final ImageRepository imageRepository;
     private final IProductService productService;
 
+    @Value("${api.prefix}")
+    private String apiPrefix;
+
     @Override
     public Image getImageById(Long id) {
         return imageRepository.findById(id)
@@ -39,7 +44,7 @@ public class ImageService implements IImageService {
                 image.setFileType(file.getContentType());
                 image.setImage(new SerialBlob(file.getBytes()));
                 image.setProduct(product);
-                String buildDownloadUrl = "${api.prefix}/images/image/download/";
+                String buildDownloadUrl = apiPrefix + "/images/image/download/";
                 image.setDownloadUrl(buildDownloadUrl + image.getId());
                 Image savedImage = imageRepository.save(image);
                 // use the saved image id (WHY duplicate?)
@@ -62,7 +67,7 @@ public class ImageService implements IImageService {
     @Override
     public void deleteImageById(Long id) {
         imageRepository.findById(id).ifPresentOrElse(
-                imageRepository::save, () -> {
+                imageRepository::delete, () -> {
                     throw new ResourceNotFoundException("Image with id " + id + " not found");
                 }
         );
