@@ -7,7 +7,6 @@ import com.example.dailycodework.dream_shops.response.ApiResponse;
 import com.example.dailycodework.dream_shops.service.image.IImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,15 +37,20 @@ public class ImageController {
     }
 
     @GetMapping("/image/download/{imageId}")
-    public ResponseEntity<ApiResponse> downloadImage(@PathVariable Long imageId) throws SQLException {
-        Image image = imageService.getImageById(imageId);
-        ByteArrayResource resource = new ByteArrayResource(
-                image.getImage().getBytes(1, (int) image.getImage().length())
-        );
-        return ResponseEntity.ok(new ApiResponse("attachment; filename=\"" + image.getFileName() + "\"", image));
-                /*.contentType(MediaType.parseMediaType(image.getFileType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION,)
-                .body(resource);*/
+    public <Resource, ApiResponse> ResponseEntity<?> downloadImage(@PathVariable Long imageId) throws SQLException {
+        try {
+            Image image = imageService.getImageById(imageId);
+            ByteArrayResource resource = new ByteArrayResource(
+                    image.getImage().getBytes(1, (int) image.getImage().length())
+            );
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(image.getFileType()))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFileName() + "\"")
+                    .body((Resource) resource);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new com.example.dailycodework.dream_shops.response.ApiResponse("Download failed!", e.getMessage()));
+        }
     }
 
     @DeleteMapping("/image/delete/{imageId}")
