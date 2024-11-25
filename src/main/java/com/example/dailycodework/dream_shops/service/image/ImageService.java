@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +32,11 @@ public class ImageService implements IImageService {
     public Image getImageById(Long id) {
         return imageRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Image with id " + id + " not found"));
+    }
+
+    @Override
+    public List<Long> getAllImagesIds() {
+        return imageRepository.findAll().stream().map(Image::getId).collect(Collectors.toUnmodifiableList());
     }
 
     @Override

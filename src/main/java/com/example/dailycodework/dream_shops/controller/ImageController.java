@@ -36,6 +36,12 @@ public class ImageController {
         }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse> getAllImagesIds() {
+        return ResponseEntity.ok(
+                new ApiResponse("All images found!", imageService.getAllImagesIds()));
+    }
+
     @GetMapping("/image/download/{imageId}")
     public <Resource, ApiResponse> ResponseEntity<?> downloadImage(@PathVariable Long imageId) throws SQLException {
         try {
