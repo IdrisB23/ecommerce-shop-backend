@@ -3,6 +3,7 @@ package com.example.dailycodework.dream_shops.service.category;
 import com.example.dailycodework.dream_shops.exceptions.ResourceAlreadyExistsException;
 import com.example.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.example.dailycodework.dream_shops.model.Category;
+import com.example.dailycodework.dream_shops.model.Product;
 import com.example.dailycodework.dream_shops.repository.CategoryRepository;
 import com.example.dailycodework.dream_shops.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -54,14 +55,21 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void deleteAllCategories() {
-
+        List<Category> allCategories = this.getAllCategories();
+        for (Category category : allCategories) {
+            this.deleteCategoryById(category.getId());
+        }
     }
 
     @Override
     public void deleteCategoryById(Long id) {
-        categoryRepository.findById(id)
-                .ifPresentOrElse(categoryRepository::delete, () -> {
-                    throw new ResourceNotFoundException("Category not found!");
-                });
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found!"));
+        List<Product> products = category.getProducts();   // get all products in the category
+        for (Product product : products) {
+            product.setCategory(null);  // set the category of the product to null
+            productRepository.save(product);  // save the product
+        }
+        categoryRepository.delete(category);
     }
 }
