@@ -36,7 +36,7 @@ public class ImageService implements IImageService {
 
     @Override
     public List<Long> getAllImagesIds() {
-        return imageRepository.findAll().stream().map(Image::getId).collect(Collectors.toUnmodifiableList());
+        return imageRepository.findAll().stream().map(Image::getId).collect(Collectors.toList());
     }
 
     @Override
