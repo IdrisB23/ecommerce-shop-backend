@@ -3,6 +3,7 @@ package com.example.dailycodework.dream_shops.controller;
 
 import com.example.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.example.dailycodework.dream_shops.response.ApiResponse;
+import com.example.dailycodework.dream_shops.service.cart.CartService;
 import com.example.dailycodework.dream_shops.service.cart.ICartItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,12 +16,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("${api.prefix}/cart-items")
 public class CartItemController {
     private final ICartItemService cartItemService;
+    private final CartService cartService;
 
     @PostMapping("cart-item/add")
     // difference between using int and Integer is (among others) their default values (0 vs. null)
-    public ResponseEntity<ApiResponse> addItemToCart(@RequestParam Long cartId,
+    public ResponseEntity<ApiResponse> addItemToCart(@RequestParam(required = false) Long cartId,
                                                      @RequestParam Long productId,
                                                      @RequestParam Integer quantity) {
+        if (cartId == null) {
+            cartId = cartService.initializeNewCart();
+        }
         try {
             cartItemService.addItemToCart(cartId, productId, quantity);
             return ResponseEntity.ok(new ApiResponse(
@@ -33,8 +38,11 @@ public class CartItemController {
     }
 
     @DeleteMapping("cart-item/remove")
-    public ResponseEntity<ApiResponse> removeItemFromCart(@RequestParam Long cartId,
+    public ResponseEntity<ApiResponse> removeItemFromCart(@RequestParam(required = false) Long cartId,
                                                           @RequestParam Long productId) {
+        if (cartId == null) {
+            cartId = cartService.initializeNewCart();
+        }
         try {
             cartItemService.removeItemFromCart(cartId, productId);
             return ResponseEntity.ok(new ApiResponse(
@@ -47,9 +55,12 @@ public class CartItemController {
     }
 
     @PutMapping("cart-item/update")
-    public ResponseEntity<ApiResponse> updateItemInCart(@RequestParam Long cartId,
+    public ResponseEntity<ApiResponse> updateItemInCart(@RequestParam(required = false) Long cartId,
                                                         @RequestParam Long productId,
                                                         @RequestParam Integer quantity) {
+        if (cartId == null) {
+            cartId = cartService.initializeNewCart();
+        }
         try {
             cartItemService.updateItemQuantity(cartId, productId, quantity);
             return ResponseEntity.ok(new ApiResponse(
