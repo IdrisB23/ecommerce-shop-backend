@@ -21,8 +21,6 @@ public class CartService implements ICartService {
     public Cart getCartById(Long cartId) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
-        // TODO (test corr. Controller; remove/add lines):
-        // 2 lines below needed to initiate update to the cart's total amount?
         return cartRepository.save(cart);
     }
 
@@ -31,12 +29,12 @@ public class CartService implements ICartService {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
         cart.getCartItems().forEach(cartItem -> {
+            // set the cartItem's cart to null to avoid a constraint violation
             cartItem.setCart(null);
+            // commit changes / save the cartItem to update the database
             cartItemRepository.save(cartItem);
         });
         cartItemRepository.deleteAllByCartId(cartId);
-        // TODO: setting total amount to ZERO here is needed or is it not because we are deleting the cart?
-        // cart.setTotalAmount(BigDecimal.ZERO);
         cart.getCartItems().clear();
         cartRepository.deleteById(cartId);
     }

@@ -64,11 +64,11 @@ public class CartItemService implements ICartItemService {
         // 2. iterate through the cartItems in the cart and update the quantity of the item with the given productId
         CartItem cartItem = getCartItemByCartIdAndProductId(cartId, productId);
         cartItem.setQuantity(quantity);
-        // TODO: is this line needed?
+        // The line below is not needed, because we are updating the quantity and not the product itself
         // cartItem.setUnitPrice(productService.getProductById(productId).getPrice());
         cartItem.setTotalPrice();
-        // TODO: is this line needed?
         cartItemRepository.save(cartItem);
+        cart.updateTotalAmount();
         cartRepository.save(cart);
     }
 

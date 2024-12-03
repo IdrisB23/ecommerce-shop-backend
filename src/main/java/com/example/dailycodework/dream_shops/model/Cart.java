@@ -37,7 +37,7 @@ public class Cart {
         this.updateTotalAmount();
     }
 
-    private void updateTotalAmount() {
+    public void updateTotalAmount() {
         this.totalAmount = this.cartItems.stream()
                 .map(cartItem -> {
                     if (cartItem.getUnitPrice() == null) {
