@@ -1,85 +1,11 @@
 {
 	"info": {
-		"_postman_id": "4db28a51-35c2-452b-8c19-693c6aa7299a",
+		"_postman_id": "518752da-2852-4e42-8960-45a77ede45c2",
 		"name": "SpringBootApp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20971675"
 	},
 	"item": [
-		{
-			"name": "User",
-			"item": [
-				{
-					"name": "postUser",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Idris Babay\",\r\n    \"username\": \"ibabay\",\r\n    \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/user",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getAllUsers",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/users",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getUserById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/user?id=1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
 		{
 			"name": "Product",
 			"item": [
@@ -105,13 +31,137 @@
 					"response": []
 				},
 				{
+					"name": "get-product-by-id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/products/product/get/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"product",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-product-by-id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/products/product/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"product",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-products-by-category-and-brand",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/products/get/by/category-and-brand?categoryName=Electronics&brandName=Apple",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"get",
+								"by",
+								"category-and-brand"
+							],
+							"query": [
+								{
+									"key": "categoryName",
+									"value": "Electronics"
+								},
+								{
+									"key": "brandName",
+									"value": "Apple"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count-products-by-brand-and-name",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"TV\",\r\n    \"brand\": \"Apple\",\r\n    \"price\": \"400\",\r\n    \"inventory\": \"20\",\r\n    \"description\": \"Apple smart electronics\",\r\n    \"category\": \"Electronics\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9193/api/v1/products/count/by/brand-and-name?brandName=Apple&productName=Watch",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"count",
+								"by",
+								"brand-and-name"
+							],
+							"query": [
+								{
+									"key": "brandName",
+									"value": "Apple"
+								},
+								{
+									"key": "productName",
+									"value": "Watch"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "create-product",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"TV\",\r\n    \"brand\": \"Apple\",\r\n    \"price\": \"400\",\r\n    \"inventory\": \"20\",\r\n    \"description\": \"Apple smart electronics\",\r\n    \"category\": \"Electronics\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Watch\",\r\n    \"brand\": \"Apple\",\r\n    \"price\": \"200\",\r\n    \"inventory\": \"5\",\r\n    \"description\": \"\",\r\n    \"category\": \"Electronics\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -136,10 +186,473 @@
 					"response": []
 				},
 				{
-					"name": "get-product-by-category-and-brand",
+					"name": "update-product-by-id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 3,\r\n    \"name\": \"Watch\",\r\n    \"brand\": \"Apple\",\r\n    \"price\": 200,\r\n    \"inventory\": 5,\r\n    \"description\": null,\r\n    \"category\": {\r\n        \"id\": 1,\r\n        \"description\": null,\r\n        \"name\": \"Electronics\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9193/api/v1/products/product/update/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"product",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "get-all-categories",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/categories/all",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-category-by-name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/categories/category/get-by-name?categoryName=Electronics",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"category",
+								"get-by-name"
+							],
+							"query": [
+								{
+									"key": "categoryName",
+									"value": "Electronics"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"This is my amazing category\",\r\n    \"name\": \"Amazing category\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9193/api/v1/categories/category/add",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"category",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-category-by-id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"This is my amazing category\",\r\n    \"name\": \"Amazing category\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9193/api/v1/categories/category/delete/3",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"category",
+								"delete",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-category-by-id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Electronics are based on semi-conductors\",\r\n    \"name\": \"Electronics\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9193/api/v1/categories/category/update/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"category",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Image",
+			"item": [
+				{
+					"name": "download-image",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/images/image/download/6",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"images",
+								"image",
+								"download",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-images-ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/images/all",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"images",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save-images",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "productId",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/idris/Desktop/tutorials/spring_boot/dream-shops/_resources/apple_watch.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:9193/api/v1/images/save",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"images",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-image",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/images/image/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"images",
+								"image",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "get-cart-by-id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/carts/cart/4",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"cart",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-cart-total-amount",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/carts/cart/total-amount/2",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"cart",
+								"total-amount",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clear-and-delete-cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/carts/cart/clear-and-delete/2",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"cart",
+								"clear-and-delete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart Item",
+			"item": [
+				{
+					"name": "add-cart-item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/cart-items/cart-item/add?cartId=4&productId=5&quantity=1",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"cart-items",
+								"cart-item",
+								"add"
+							],
+							"query": [
+								{
+									"key": "cartId",
+									"value": "4"
+								},
+								{
+									"key": "productId",
+									"value": "5"
+								},
+								{
+									"key": "quantity",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-cart-item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/cart-items/cart-item/update?cartId=4&productId=5&quantity=2",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"cart-items",
+								"cart-item",
+								"update"
+							],
+							"query": [
+								{
+									"key": "cartId",
+									"value": "4"
+								},
+								{
+									"key": "productId",
+									"value": "5"
+								},
+								{
+									"key": "quantity",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove-cart-item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9193/api/v1/cart-items/cart-item/remove?cartId=2&productId=5",
+							"host": [
+								"localhost"
+							],
+							"port": "9193",
+							"path": [
+								"api",
+								"v1",
+								"cart-items",
+								"cart-item",
+								"remove"
+							],
+							"query": [
+								{
+									"key": "cartId",
+									"value": "2"
+								},
+								{
+									"key": "productId",
+									"value": "5"
+								}
+							]
+						}
 					},
 					"response": []
 				}
