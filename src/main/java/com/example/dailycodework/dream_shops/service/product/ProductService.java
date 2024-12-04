@@ -28,16 +28,16 @@ public class ProductService implements IProductService {
 
     @Override
     public Product addProduct(AddProductRequest request) {
+        // All of this is done via Optional-Supplier
         // check if the category is found in the database
-        // if yes, set it as the new product category
-        // if not, save it as a new category
-        // set it as the new product category
-        Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
+        Category category = categoryRepository.findByName(request.getCategory().getName())
                 .orElseGet(()->{
+                    // if not, save it as a new category
                     Category newCategory = new Category(request.getCategory().getName(), request.getCategory().getDescription());
                     categoryRepository.save(newCategory);
                     return newCategory;
                 });
+        // set it as the new product category
         Product newProduct = createProduct(request, category);
         productRepository.save(newProduct);
         return newProduct;
@@ -81,7 +81,9 @@ public class ProductService implements IProductService {
         existingProduct.setDescription(request.getDescription());
         existingProduct.setInventory(request.getInventory());
         existingProduct.setPrice(request.getPrice());
-        Category category = categoryRepository.findByName(request.getCategory().getName());
+        Category category = categoryRepository
+                .findByName(request.getCategory().getName())
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found!"));
         existingProduct.setCategory(category);
         return existingProduct;
     }
@@ -130,7 +132,9 @@ public class ProductService implements IProductService {
 
     public ProductDto convertToDto(Product product) {
         ProductDto productDto = modelMapper.map(product, ProductDto.class);
-        List<Image> images = imageRepository.findByProductId(product.getId());
+        List<Image> images = imageRepository
+                .findByProductId(product.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Images not found!"));
         List<ImageDto> imageDtos = images.stream()
                 .map(image -> modelMapper.map(image, ImageDto.class))
                 .toList();
