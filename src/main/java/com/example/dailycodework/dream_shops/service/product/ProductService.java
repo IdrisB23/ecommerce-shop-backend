@@ -95,27 +95,42 @@ public class ProductService implements IProductService {
 
     @Override
     public List<Product> getProductsByCategory(String category) {
-        return productRepository.findByCategoryName(category);
+        checkCategoryExists(category);
+        return productRepository.findByCategoryName(category)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Products not found for the given category " + category + "!"));
     }
 
     @Override
     public List<Product> getProductsByBrand(String brand) {
-        return productRepository.findByBrand(brand);
+        return productRepository.findByBrand(brand)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Products not found for the given brand " + brand + "!"));
     }
 
     @Override
     public List<Product> getProductsByCategoryAndBrand(String category, String brand) {
-        return productRepository.findByCategoryNameAndBrand(category, brand);
+        checkCategoryExists(category);
+        return productRepository.findByCategoryNameAndBrand(category, brand)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Products not found for the given category " +
+                                category + " and brand " + brand + "!"));
     }
 
     @Override
     public List<Product> getProductsByName(String name) {
-        return productRepository.findByName(name);
+        return productRepository.findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Products not found for the given product name " +
+                                name + "!"));
     }
 
     @Override
     public List<Product> getProductsByBrandAndName(String brand, String name) {
-        return productRepository.findByBrandAndName(brand, name);
+        return productRepository.findByBrandAndName(brand, name)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Products not found for the given brand " +
+                                brand + " and product name " + name + "!"));
     }
 
     @Override
@@ -128,6 +143,12 @@ public class ProductService implements IProductService {
         return products.stream()
                 .map(this::convertToDto)
                 .toList();
+    }
+
+    private void checkCategoryExists(String category) {
+        if (!categoryRepository.existsByName(category)) {
+            throw new ResourceNotFoundException("Category not found!");
+        }
     }
 
     public ProductDto convertToDto(Product product) {
