@@ -2,6 +2,7 @@ package com.example.dailycodework.dream_shops.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.NaturalId;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    // read-only and used by hibernate for fast lookups (via caching)
+    @NaturalId
     private String email;
     private String password;
 
