@@ -62,7 +62,12 @@ public class ProductService implements IProductService {
     @Override
     public void deleteProductById(Long id) {
         productRepository.findById(id)
-                .ifPresentOrElse(productRepository::delete, () -> {
+                .ifPresentOrElse(product -> {
+                    Category productCategory = product.getCategory();
+                    productCategory.getProducts().remove(product);
+                    categoryRepository.save(productCategory);
+                    productRepository.delete(product);
+                }, () -> {
                     throw new ResourceNotFoundException("Product not found!");
                 });
     }
