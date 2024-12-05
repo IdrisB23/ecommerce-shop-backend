@@ -25,6 +25,12 @@ public class CartService implements ICartService {
     }
 
     @Override
+    public Cart getCartByUserId(Long userId) {
+        return cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
+    }
+
+    @Override
     public void clearAndDeleteCart(Long cartId) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
@@ -53,5 +59,4 @@ public class CartService implements ICartService {
         newCart.setId(newCartId);
         return cartRepository.save(newCart).getId();
     }
-
 }
