@@ -9,7 +9,7 @@ import com.example.dailycodework.dream_shops.model.OrderItem;
 import com.example.dailycodework.dream_shops.model.Product;
 import com.example.dailycodework.dream_shops.repository.OrderRepository;
 import com.example.dailycodework.dream_shops.repository.ProductRepository;
-import com.example.dailycodework.dream_shops.service.cart.CartService;
+import com.example.dailycodework.dream_shops.service.cart.ICartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ import java.util.List;
 public class OrderService implements IOrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
-    private final CartService cartService;
+    private final ICartService cartService;
 
     @Override
     public Order placeOrder(Long userId) {
