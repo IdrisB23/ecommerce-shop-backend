@@ -1,5 +1,5 @@
 .\load_env.ps1
-$buildPath = "C:\Users\idris\Desktop\tutorials\spring_boot\dream-shops\target"
+$buildPath = Join-Path (Get-Location) "target"
 
 if (Test-Path $buildPath) {
     # If the directory exists, do something here
