@@ -22,5 +22,5 @@ public interface IProductService {
     List<Product> getProductsByName(String name) throws ResourceNotFoundException;
     List<Product> getProductsByBrandAndName(String brand, String name) throws ResourceNotFoundException;
     Long countProductsByBrandAndName(String brand, String name);
-    List<ProductDto> getConvertedProducts(List<Product> products) throws ResourceNotFoundException;
+    List<ProductDto> getConvertedProducts(List<Product> products);
 }

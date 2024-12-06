@@ -7,6 +7,5 @@ public interface ICartItemService {
     void addItemToCart(Long cartId, Long productId, int quantity) throws ResourceNotFoundException;
     void removeItemFromCart(Long cartId, Long productId) throws ResourceNotFoundException;
     void updateItemQuantity(Long cartId, Long productId, int quantity) throws ResourceNotFoundException;
-
     CartItem getCartItemByCartIdAndProductId(Long cartId, Long productId) throws ResourceNotFoundException;
 }
