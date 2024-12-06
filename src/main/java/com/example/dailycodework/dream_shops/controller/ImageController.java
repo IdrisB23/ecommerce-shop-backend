@@ -28,6 +28,9 @@ public class ImageController {
         try {
             List<ImageDto> imageDtos = imageService.saveImages(files, productId);
             return ResponseEntity.ok(new ApiResponse("Upload success!", imageDtos));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
         }
         catch (Exception e) {
             return ResponseEntity
