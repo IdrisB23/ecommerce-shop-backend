@@ -2,7 +2,9 @@ package com.example.dailycodework.dream_shops.service.user;
 
 import com.example.dailycodework.dream_shops.exceptions.ResourceAlreadyExistsException;
 import com.example.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
+import com.example.dailycodework.dream_shops.model.Cart;
 import com.example.dailycodework.dream_shops.model.User;
+import com.example.dailycodework.dream_shops.repository.CartRepository;
 import com.example.dailycodework.dream_shops.repository.UserRepository;
 import com.example.dailycodework.dream_shops.request.CreateUserRequest;
 import com.example.dailycodework.dream_shops.request.UpdateUserRequest;
@@ -15,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService implements IUserService {
     private final UserRepository userRepository;
+    private final CartRepository cartRepository;
 
     @Override
     public User getUserById(Long id) {
@@ -42,7 +45,13 @@ public class UserService implements IUserService {
                     user.setLastName(req.getLastName());
                     user.setEmail(req.getEmail());
                     user.setPassword(req.getPassword());
-                    return userRepository.save(user);
+                    User savedUser = userRepository.save(user);
+                    // every new User is instantiated with an empty cart
+                    Cart cart = new Cart();
+                    cart.setUser(savedUser);
+                    Cart savedCart = cartRepository.save(cart);
+                    user.setCart(savedCart);
+                    return userRepository.save(savedUser);
                 })
                 .orElseThrow(() -> new ResourceAlreadyExistsException(
                         "User with email:: " + request.getEmail() + " already exists"));
