@@ -10,6 +10,10 @@ import com.example.dailycodework.dream_shops.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+
+// TODO: use DTOs instead of entities in the service layer
 @Service
 @RequiredArgsConstructor
 public class CartItemService implements ICartItemService {
@@ -79,5 +83,11 @@ public class CartItemService implements ICartItemService {
                 .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Item not found in the cart!"));
+    }
+
+    @Override
+    public List<CartItem> getCartItemsByCartId(Long cartId) {
+        return cartItemRepository.findByCartId(cartId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
     }
 }

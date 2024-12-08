@@ -11,12 +11,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
+// TODO: use DTOs instead of entities in the controller layer
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("${api.prefix}/cart-items")
 public class CartItemController {
     private final ICartItemService cartItemService;
     private final CartService cartService;
+
+    @GetMapping("by/cartId/{cartId}")
+    public ResponseEntity<ApiResponse> getCartItemsByCartId(@PathVariable Long cartId) {
+        try {
+            return ResponseEntity.ok(new ApiResponse(
+                    "Cart items fetched successfully", cartItemService.getCartItemsByCartId(cartId)
+            ));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
 
     @PostMapping("cart-item/add")
     // difference between using int and Integer is (among others) their default values (0 vs. null)
