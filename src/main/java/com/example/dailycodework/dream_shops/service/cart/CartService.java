@@ -56,11 +56,14 @@ public class CartService implements ICartService {
 
     @Override
     public Cart initializeNewCart(User user) {
-        return Optional.ofNullable(getCartByUserId(user.getId()))
-                .orElseGet(() -> {
-                    Cart cart = new Cart();
-                    cart.setUser(user);
-                    return cartRepository.save(cart);
-                });
+        Optional<Cart> optionalCart = cartRepository.findByUserId(user.getId());
+        if (optionalCart.isPresent()) {
+            return optionalCart.get();
+        } else {
+            Cart cart = new Cart();
+            cart.setId(cartIdGenerator.incrementAndGet());
+            cart.setUser(user);
+            return cartRepository.save(cart);
+        }
     }
 }
