@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
@@ -23,5 +24,7 @@ public class User {
     private Cart cart;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders;
+    // instantiate orders to empty list to avoid problems when creating new users via POST requests
+    // Same pattern as in Cart.java (Set<CarItem> items = new HashSet<>() is used there for)
+    private List<Order> orders = new ArrayList<>();
 }
