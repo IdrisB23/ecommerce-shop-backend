@@ -1,13 +1,12 @@
 package com.example.dailycodework.dream_shops.dto;
 
 import com.example.dailycodework.dream_shops.model.Category;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Getter @Setter
+@Data
 public class ProductDto {
     private Long id;
     private String name;

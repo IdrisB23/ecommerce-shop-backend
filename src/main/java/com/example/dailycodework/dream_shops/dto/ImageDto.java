@@ -1,9 +1,8 @@
 package com.example.dailycodework.dream_shops.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter @Setter
+@Data
 public class ImageDto {
     private Long id;
     private String downloadUrl;
