@@ -1,6 +1,7 @@
 package com.example.dailycodework.dream_shops.controller;
 
 
+import com.example.dailycodework.dream_shops.dto.CartDto;
 import com.example.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.example.dailycodework.dream_shops.model.Cart;
 import com.example.dailycodework.dream_shops.response.ApiResponse;
@@ -20,8 +21,8 @@ public class CartController {
     @GetMapping("/cart/{cartId}")
     public ResponseEntity<ApiResponse> getCartById(@PathVariable Long cartId) {
         try {
-            Cart cart = cartService.getCartById(cartId);
-            return ResponseEntity.ok(new ApiResponse("Cart fetched successfully", cart));
+            CartDto cartDto = cartService.getCartDtoById(cartId);
+            return ResponseEntity.ok(new ApiResponse("Cart fetched successfully", cartDto));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ApiResponse(e.getMessage(), null));

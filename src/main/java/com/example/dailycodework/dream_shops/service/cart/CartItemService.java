@@ -1,5 +1,6 @@
 package com.example.dailycodework.dream_shops.service.cart;
 
+import com.example.dailycodework.dream_shops.dto.CartItemDto;
 import com.example.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.example.dailycodework.dream_shops.model.Cart;
 import com.example.dailycodework.dream_shops.model.CartItem;
@@ -8,6 +9,7 @@ import com.example.dailycodework.dream_shops.repository.CartItemRepository;
 import com.example.dailycodework.dream_shops.repository.CartRepository;
 import com.example.dailycodework.dream_shops.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class CartItemService implements ICartItemService {
     private final CartRepository cartRepository;
     private final ICartService cartService;
     private final IProductService productService;
+    private final ModelMapper modelMapper;
 
     @Override
     public void addItemToCart(Long cartId, Long productId, int quantity) {
@@ -77,6 +80,16 @@ public class CartItemService implements ICartItemService {
     }
 
     @Override
+    public CartItemDto getCartItemDtoByCartIdAndProductId(Long cartId, Long productId) {
+        Cart cart = cartService.getCartById(cartId);
+        CartItem cartItem = cart.getCartItems().stream()
+                .filter(item -> item.getProduct().getId().equals(productId))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Item not found in the cart!"));
+        return convertToDto(cartItem);
+    }
+
+    @Override
     public CartItem getCartItemByCartIdAndProductId(Long cartId, Long productId) {
         Cart cart = cartService.getCartById(cartId);
         return cart.getCartItems().stream()
@@ -89,5 +102,20 @@ public class CartItemService implements ICartItemService {
     public List<CartItem> getCartItemsByCartId(Long cartId) {
         return cartItemRepository.findByCartId(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
+    }
+
+    @Override
+    public List<CartItemDto> getCartItemDtosByCartId(Long cartId) {
+        List<CartItem> cartItems = cartItemRepository.findByCartId(cartId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
+        return cartItems
+                .stream()
+                .map(this::convertToDto)
+                .toList();
+    }
+
+    @Override
+    public CartItemDto convertToDto(CartItem cartItem) {
+        return modelMapper.map(cartItem, CartItemDto.class);
     }
 }

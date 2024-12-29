@@ -22,7 +22,7 @@ public class Cart {
     private BigDecimal totalAmount = BigDecimal.ZERO;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "cartItem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CartItem> cartItems = new HashSet<>();
 
     @JsonIgnore @OneToOne

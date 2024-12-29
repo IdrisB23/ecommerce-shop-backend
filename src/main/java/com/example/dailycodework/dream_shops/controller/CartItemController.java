@@ -28,7 +28,7 @@ public class CartItemController {
     public ResponseEntity<ApiResponse> getCartItemsByCartId(@PathVariable Long cartId) {
         try {
             return ResponseEntity.ok(new ApiResponse(
-                    "Cart items fetched successfully", cartItemService.getCartItemsByCartId(cartId)
+                    "Cart items fetched successfully", cartItemService.getCartItemDtosByCartId(cartId)
             ));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

@@ -1,11 +1,13 @@
 package com.example.dailycodework.dream_shops.service.cart;
 
+import com.example.dailycodework.dream_shops.dto.CartDto;
 import com.example.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.example.dailycodework.dream_shops.model.Cart;
 import com.example.dailycodework.dream_shops.model.User;
 import com.example.dailycodework.dream_shops.repository.CartItemRepository;
 import com.example.dailycodework.dream_shops.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -18,18 +20,34 @@ public class CartService implements ICartService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final AtomicLong cartIdGenerator = new AtomicLong(0);
+    private final ModelMapper modelMapper;
 
     @Override
     public Cart getCartById(Long cartId) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
-        return cartRepository.save(cart);
+        return cart;
+    }
+
+
+    @Override
+    public CartDto getCartDtoById(Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
+        return convertToDto(cart);
     }
 
     @Override
     public Cart getCartByUserId(Long userId) {
         return cartRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
+    }
+
+    @Override
+    public CartDto getCartDtoByUserId(Long userId) {
+        Cart cart = cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
+        return convertToDto(cart);
     }
 
     @Override
@@ -65,5 +83,10 @@ public class CartService implements ICartService {
             cart.setUser(user);
             return cartRepository.save(cart);
         }
+    }
+
+    @Override
+    public CartDto convertToDto(Cart cart) {
+        return modelMapper.map(cart, CartDto.class);
     }
 }
