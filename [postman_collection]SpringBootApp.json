@@ -10,18 +10,45 @@
 			"name": "Product",
 			"item": [
 				{
+					"name": "create-product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"iPhone\",\r\n    \"brand\": \"Apple\",\r\n    \"price\": \"1300\",\r\n    \"inventory\": \"100\",\r\n    \"description\": \"\",\r\n    \"category\": \"Electronics\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/products/product/add",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"products",
+								"product",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get-all-products",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/products/all",
+							"raw": "{{baseUrl}}/v1/products/all",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"products",
 								"all"
@@ -36,13 +63,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/products/product/get/1",
+							"raw": "{{baseUrl}}/v1/products/product/get/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"products",
 								"product",
@@ -54,23 +79,22 @@
 					"response": []
 				},
 				{
-					"name": "delete-product-by-id",
+					"name": "get-products-by-category",
 					"request": {
-						"method": "DELETE",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/products/product/delete/1",
+							"raw": "{{baseUrl}}/v1/products/get/by/category/Electronics",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"products",
-								"product",
-								"delete",
-								"1"
+								"get",
+								"by",
+								"category",
+								"Electronics"
 							]
 						}
 					},
@@ -82,13 +106,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/products/get/by/category-and-brand?categoryName=Electronics&brandName=Apple",
+							"raw": "{{baseUrl}}/v1/products/get/by/category-and-brand?categoryName=Electronics&brandName=Apple",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"products",
 								"get",
@@ -127,13 +149,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:9193/api/v1/products/count/by/brand-and-name?brandName=Apple&productName=Watch",
+							"raw": "{{baseUrl}}/v1/products/count/by/brand-and-name?brandName=Apple&productName=Watch",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"products",
 								"count",
@@ -155,44 +175,13 @@
 					"response": []
 				},
 				{
-					"name": "create-product",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Watch\",\r\n    \"brand\": \"Apple\",\r\n    \"price\": \"200\",\r\n    \"inventory\": \"5\",\r\n    \"description\": \"\",\r\n    \"category\": \"Electronics\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:9193/api/v1/products/product/add",
-							"host": [
-								"localhost"
-							],
-							"port": "9193",
-							"path": [
-								"api",
-								"v1",
-								"products",
-								"product",
-								"add"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "update-product-by-id",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 3,\r\n    \"name\": \"Watch\",\r\n    \"brand\": \"Apple\",\r\n    \"price\": 200,\r\n    \"inventory\": 5,\r\n    \"description\": null,\r\n    \"category\": {\r\n        \"id\": 1,\r\n        \"description\": null,\r\n        \"name\": \"Electronics\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"iPhone\",\r\n    \"brand\": \"Apple\",\r\n    \"price\": 1200.00,\r\n    \"inventory\": 100,\r\n    \"description\": \"\",\r\n    \"category\": {\r\n        \"id\": 1,\r\n        \"description\": \"Electronics are based on semi-conductors\",\r\n        \"name\": \"Electronics\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -200,18 +189,37 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:9193/api/v1/products/product/update/1",
+							"raw": "{{baseUrl}}/v1/products/product/update/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"products",
 								"product",
 								"update",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-product-by-id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/products/product/delete/8",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"products",
+								"product",
+								"delete",
+								"8"
 							]
 						}
 					},
@@ -222,55 +230,6 @@
 		{
 			"name": "Category",
 			"item": [
-				{
-					"name": "get-all-categories",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:9193/api/v1/categories/all",
-							"host": [
-								"localhost"
-							],
-							"port": "9193",
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get-category-by-name",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:9193/api/v1/categories/category/get-by-name?categoryName=Electronics",
-							"host": [
-								"localhost"
-							],
-							"port": "9193",
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"category",
-								"get-by-name"
-							],
-							"query": [
-								{
-									"key": "categoryName",
-									"value": "Electronics"
-								}
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "create-category",
 					"request": {
@@ -286,13 +245,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:9193/api/v1/categories/category/add",
+							"raw": "{{baseUrl}}/v1/categories/category/add",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"categories",
 								"category",
@@ -303,32 +260,45 @@
 					"response": []
 				},
 				{
-					"name": "delete-category-by-id",
+					"name": "get-all-categories",
 					"request": {
-						"method": "DELETE",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"This is my amazing category\",\r\n    \"name\": \"Amazing category\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "localhost:9193/api/v1/categories/category/delete/3",
+							"raw": "{{baseUrl}}/v1/categories/all",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
+								"v1",
+								"categories",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-category-by-name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/categories/category/get-by-name?categoryName=Electronics",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
 								"v1",
 								"categories",
 								"category",
-								"delete",
-								"3"
+								"get-by-name"
+							],
+							"query": [
+								{
+									"key": "categoryName",
+									"value": "Electronics"
+								}
 							]
 						}
 					},
@@ -349,18 +319,46 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:9193/api/v1/categories/category/update/1",
+							"raw": "{{baseUrl}}/v1/categories/category/update/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"categories",
 								"category",
 								"update",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-category-by-id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"This is my amazing category\",\r\n    \"name\": \"Amazing category\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/categories/category/delete/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"categories",
+								"category",
+								"delete",
+								"2"
 							]
 						}
 					},
@@ -372,23 +370,34 @@
 			"name": "Image",
 			"item": [
 				{
-					"name": "download-image",
+					"name": "save-images",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/idris/Desktop/tutorials/spring-boot/dream-shops/_resources/apple_watch.jpg"
+								},
+								{
+									"key": "productId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
-							"raw": "localhost:9193/api/v1/images/image/download/6",
+							"raw": "{{baseUrl}}/v1/images/save",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"images",
-								"image",
-								"download",
-								"6"
+								"save"
 							]
 						}
 					},
@@ -400,13 +409,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/images/all",
+							"raw": "{{baseUrl}}/v1/images/all",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"images",
 								"all"
@@ -416,36 +423,52 @@
 					"response": []
 				},
 				{
-					"name": "save-images",
+					"name": "download-image",
 					"request": {
-						"method": "POST",
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/images/image/download/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"images",
+								"image",
+								"download",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-image",
+					"request": {
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "productId",
-									"value": "5",
-									"type": "text"
-								},
-								{
-									"key": "files",
+									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/idris/Desktop/tutorials/spring_boot/dream-shops/_resources/apple_watch.jpg"
+									"src": "/C:/Users/idris/Desktop/tutorials/spring-boot/dream-shops/_resources/apple_watch2.png"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:9193/api/v1/images/save",
+							"raw": "{{baseUrl}}/v1/images/image/update/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"images",
-								"save"
+								"image",
+								"update",
+								"1"
 							]
 						}
 					},
@@ -457,18 +480,16 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/images/image/delete/1",
+							"raw": "{{baseUrl}}/v1/images/image/delete/8",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"images",
 								"image",
 								"delete",
-								"1"
+								"8"
 							]
 						}
 					},
@@ -485,17 +506,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/carts/cart/4",
+							"raw": "{{baseUrl}}/v1/carts/cart/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"carts",
 								"cart",
-								"4"
+								"1"
 							]
 						}
 					},
@@ -507,18 +526,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/carts/cart/total-amount/2",
+							"raw": "{{baseUrl}}/v1/carts/cart/total-amount/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"carts",
 								"cart",
 								"total-amount",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -530,13 +547,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/carts/cart/clear-and-delete/2",
+							"raw": "{{baseUrl}}/v1/carts/cart/clear-and-delete/2",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"carts",
 								"cart",
@@ -553,18 +568,37 @@
 			"name": "Cart Item",
 			"item": [
 				{
+					"name": "get-cart-items-by-cartId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/cart-items/by/cartId/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"cart-items",
+								"by",
+								"cartId",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "add-cart-item",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/cart-items/cart-item/add?cartId=4&productId=5&quantity=1",
+							"raw": "{{baseUrl}}/v1/cart-items/cart-item/add?productId=1&quantity=4",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"cart-items",
 								"cart-item",
@@ -572,16 +606,12 @@
 							],
 							"query": [
 								{
-									"key": "cartId",
-									"value": "4"
-								},
-								{
 									"key": "productId",
-									"value": "5"
+									"value": "1"
 								},
 								{
 									"key": "quantity",
-									"value": "1"
+									"value": "4"
 								}
 							]
 						}
@@ -594,13 +624,11 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/cart-items/cart-item/update?cartId=4&productId=5&quantity=2",
+							"raw": "{{baseUrl}}/v1/cart-items/cart-item/update?cartId=1&productId=1&quantity=5",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"cart-items",
 								"cart-item",
@@ -609,15 +637,15 @@
 							"query": [
 								{
 									"key": "cartId",
-									"value": "4"
+									"value": "1"
 								},
 								{
 									"key": "productId",
-									"value": "5"
+									"value": "1"
 								},
 								{
 									"key": "quantity",
-									"value": "2"
+									"value": "5"
 								}
 							]
 						}
@@ -630,13 +658,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:9193/api/v1/cart-items/cart-item/remove?cartId=2&productId=5",
+							"raw": "{{baseUrl}}/v1/cart-items/cart-item/remove?cartId=1&productId=1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "9193",
 							"path": [
-								"api",
 								"v1",
 								"cart-items",
 								"cart-item",
@@ -645,11 +671,11 @@
 							"query": [
 								{
 									"key": "cartId",
-									"value": "2"
+									"value": "1"
 								},
 								{
 									"key": "productId",
-									"value": "5"
+									"value": "1"
 								}
 							]
 						}
@@ -657,6 +683,192 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "create-order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/orders/create-order/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"create-order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-order-by-id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/orders/order/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/orders/user/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"orders",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "create-user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Muster\",\r\n    \"lastName\": \"Mann\",\r\n    \"email\": \"mustermann@gmx.de\",\r\n    \"password\": \"pass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/users/add",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-by-id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Muster\",\r\n    \"lastName\": \"Man\",\r\n    \"email\": \"mustermann@gmx.de\",\r\n    \"password\": \"pass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/users/user/6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"user",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-user-by-id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Muster\",\r\n    \"lastName\": \"Man\",\r\n    \"email\": \"mustermann@gmx.de\",\r\n    \"password\": \"pass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/users/delete/6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"delete",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:9193/api",
+			"type": "string"
 		}
 	]
 }
