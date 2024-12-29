@@ -1,5 +1,6 @@
 package com.example.dailycodework.dream_shops.service.user;
 
+import com.example.dailycodework.dream_shops.dto.UserDto;
 import com.example.dailycodework.dream_shops.exceptions.ResourceAlreadyExistsException;
 import com.example.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.example.dailycodework.dream_shops.model.Cart;
@@ -9,6 +10,7 @@ import com.example.dailycodework.dream_shops.repository.UserRepository;
 import com.example.dailycodework.dream_shops.request.CreateUserRequest;
 import com.example.dailycodework.dream_shops.request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,11 +20,17 @@ import java.util.Optional;
 public class UserService implements IUserService {
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
+    @Override
+    public UserDto getUserDtoById(Long id) {
+        return convertToDto(getUserById(id));
     }
 
     @Override
@@ -58,6 +66,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public UserDto createNewUserAndReturnDto(CreateUserRequest request) {
+        return convertToDto(createNewUser(request));
+    }
+
+    @Override
     public User updateUser(UpdateUserRequest request, Long userId) {
         return userRepository.findById(userId)
                 .map(user -> {
@@ -66,5 +79,15 @@ public class UserService implements IUserService {
                     return userRepository.save(user);
                 })
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
+    @Override
+    public UserDto updateUserAndReturnDto(UpdateUserRequest request, Long userId) {
+        return convertToDto(updateUser(request, userId));
+    }
+
+    @Override
+    public UserDto convertToDto(User user) {
+        return modelMapper.map(user, UserDto.class);
     }
 }

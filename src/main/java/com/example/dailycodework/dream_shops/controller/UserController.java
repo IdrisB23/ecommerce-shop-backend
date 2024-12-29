@@ -1,5 +1,6 @@
 package com.example.dailycodework.dream_shops.controller;
 
+import com.example.dailycodework.dream_shops.dto.UserDto;
 import com.example.dailycodework.dream_shops.exceptions.ResourceAlreadyExistsException;
 import com.example.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.example.dailycodework.dream_shops.model.User;
@@ -22,7 +23,7 @@ public class UserController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse> getUserById(@PathVariable Long userId) {
         try {
-            User user = userService.getUserById(userId);
+            UserDto user = userService.getUserDtoById(userId);
             return ResponseEntity.ok(new ApiResponse("Success", user));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
@@ -32,7 +33,7 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> createUser(@RequestBody CreateUserRequest request) {
         try {
-            User user = userService.createNewUser(request);
+            UserDto user = userService.createNewUserAndReturnDto(request);
             return ResponseEntity.ok(new ApiResponse("Create User Success!", user));
         } catch (ResourceAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse(e.getMessage(), null));
@@ -41,7 +42,7 @@ public class UserController {
     @PutMapping("/update/{userId}")
     public ResponseEntity<ApiResponse> updateUser(@RequestBody UpdateUserRequest request, @PathVariable Long userId) {
         try {
-            User user = userService.updateUser(request, userId);
+            UserDto user = userService.updateUserAndReturnDto(request, userId);
             return ResponseEntity.ok(new ApiResponse("Update User Success!", user));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
