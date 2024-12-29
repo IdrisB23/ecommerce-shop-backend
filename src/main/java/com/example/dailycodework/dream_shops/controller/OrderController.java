@@ -1,6 +1,6 @@
 package com.example.dailycodework.dream_shops.controller;
 
-import com.example.dailycodework.dream_shops.model.Order;
+import com.example.dailycodework.dream_shops.dto.OrderDto;
 import com.example.dailycodework.dream_shops.response.ApiResponse;
 import com.example.dailycodework.dream_shops.service.order.IOrderService;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +16,11 @@ import java.util.List;
 public class OrderController {
     private final IOrderService orderService;
 
-    @PostMapping("/order")
-    public ResponseEntity<ApiResponse> createOrder(Long userId) {
-        Order order = null;
+    @PostMapping("/create-order/{userId}")
+    public ResponseEntity<ApiResponse> createOrder(@PathVariable Long userId) {
+        OrderDto order = null;
         try {
-            order = orderService.placeOrder(userId);
+            order = orderService.placeOrderAndGetDto(userId);
             return ResponseEntity.ok(new ApiResponse("Order created successfully!", order));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -31,7 +31,7 @@ public class OrderController {
     @GetMapping("/order/{orderId}")
     public ResponseEntity<ApiResponse> getOrderById(@PathVariable Long orderId) {
         try {
-            Order order = orderService.getOrder(orderId);
+            OrderDto order = orderService.getOrderDto(orderId);
             return ResponseEntity.ok(new ApiResponse("Order retrieved successfully!", order));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -42,7 +42,7 @@ public class OrderController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse> getUserOrders(@PathVariable Long userId) {
         try {
-            List<Order> userOrders = orderService.getOrdersByUserId(userId);
+            List<OrderDto> userOrders = orderService.getOrderDtosByUserId(userId);
             return ResponseEntity.ok(new ApiResponse("User orders retrieved successfully!", userOrders));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

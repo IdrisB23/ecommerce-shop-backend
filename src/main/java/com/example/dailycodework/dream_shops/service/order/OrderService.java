@@ -1,5 +1,6 @@
 package com.example.dailycodework.dream_shops.service.order;
 
+import com.example.dailycodework.dream_shops.dto.OrderDto;
 import com.example.dailycodework.dream_shops.enums.OrderStatus;
 import com.example.dailycodework.dream_shops.exceptions.ProductOutOfStockException;
 import com.example.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
@@ -11,6 +12,7 @@ import com.example.dailycodework.dream_shops.repository.OrderRepository;
 import com.example.dailycodework.dream_shops.repository.ProductRepository;
 import com.example.dailycodework.dream_shops.service.cart.ICartService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -24,6 +26,7 @@ public class OrderService implements IOrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final ICartService cartService;
+    private final ModelMapper modelMapper;
 
     @Override
     public Order placeOrder(Long userId) {
@@ -35,6 +38,11 @@ public class OrderService implements IOrderService {
         Order commitedOrder = orderRepository.save(order);
         cartService.clearAndDeleteCart(cart.getId());
         return commitedOrder;
+    }
+
+    @Override
+    public OrderDto placeOrderAndGetDto(Long userId) {
+        return convertToDto(placeOrder(userId));
     }
 
     private Order createOrder(Cart cart) {
@@ -89,8 +97,26 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    public OrderDto getOrderDto(Long userId) {
+        return convertToDto(getOrder(userId));
+    }
+
+    @Override
     public List<Order> getOrdersByUserId(Long userId) {
         return orderRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("No orders for the given user!"));
+    }
+
+    @Override
+    public List<OrderDto> getOrderDtosByUserId(Long userId) {
+        return getOrdersByUserId(userId)
+                .stream()
+                .map(this::convertToDto)
+                .toList();
+    }
+
+    @Override
+    public OrderDto convertToDto(Order order) {
+        return modelMapper.map(order, OrderDto.class);
     }
 }
