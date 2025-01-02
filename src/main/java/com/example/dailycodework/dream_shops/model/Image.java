@@ -11,6 +11,7 @@ import java.sql.Blob;
 @Getter @Setter @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "`image`")
 public class Image {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

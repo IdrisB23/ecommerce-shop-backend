@@ -15,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "`cart`")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

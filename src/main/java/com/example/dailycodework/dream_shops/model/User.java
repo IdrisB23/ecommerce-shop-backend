@@ -10,6 +10,7 @@ import java.util.List;
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 @Entity
+@Table(name = "`user`")
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,4 +28,8 @@ public class User {
     // instantiate orders to empty list to avoid problems when creating new users via POST requests
     // Same pattern as in Cart.java (Set<CarItem> items = new HashSet<>() is used there for)
     private List<Order> orders = new ArrayList<>();
+
+    public User(long id) {
+        this.id = id;
+    }
 }
